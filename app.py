@@ -6,12 +6,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
+from dash.dependencies import Input, Output
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 df = pd.read_csv('C:/Users/sourabh gupta/Desktop/sg.csv')
+df2 = pd.read_csv('Output/output.csv')
 
 colors = {
     'background': '#111111',
@@ -60,19 +62,19 @@ fig1, ax1 = plt.subplots()
 ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
         shadow=True, startangle=90)
 ax1.axis('equal')
-fg=go.Figure(plt.show())
+fg = go.Figure(plt.show())
 # END OF PIE CHART TEMP
 
-#MAP
-cities=pd.read_csv('C:/Users/sourabh gupta/Downloads/Compressed/zomato/zomato.csv', engine='python')
-f=px.scatter_mapbox(cities,lat="Latitude",lon="Longitude", hover_name="City"
-                     ,hover_data=['Address','Locality'])
+# MAP
+cities = pd.read_csv('C:/Users/sourabh gupta/Downloads/Compressed/zomato/zomato.csv', engine='python')
+f = px.scatter_mapbox(cities, lat="Latitude", lon="Longitude", hover_name="City"
+                      , hover_data=['Address', 'Locality'])
 f.update_layout(mapbox_style="open-street-map")
-f.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+f.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 f.show()
-#END MAP
+# END MAP
 
-app.layout = html.Div(style={'text-align': 'center', 'font-weight':'bolder'}, children=[
+app.layout = html.Div(style={'text-align': 'center', 'font-weight': 'bolder'}, children=[
     html.H1(children='EPITECT DISEASE SURVEILLANCE SYSTEM'),
 
     html.Div(style={'height': '20px', 'width': '800px',
@@ -82,8 +84,13 @@ app.layout = html.Div(style={'text-align': 'center', 'font-weight':'bolder'}, ch
             Dash: A web application framework for Python.
             '''),
     html.Div(
-        style={'height': '800px', 'width': '800px'
-            },
+        dcc.Dropdown(id='dropdown',
+                     options=[
+                         {'label': i, 'value': i} for i in df2.Location.unique()],
+                     searchable=False
+                     )),
+    html.Div(
+        style={'height': '800px', 'width': '800px'},
         children=
         dcc.Graph(
             id='line-graph',
@@ -107,13 +114,14 @@ app.layout = html.Div(style={'text-align': 'center', 'font-weight':'bolder'}, ch
         )
     ),
     html.Div(
-            style={'height': '800px', 'width': '800px'},
-            children=
-            dcc.Graph(
-                id='map',
-                figure=f
-            )
-    )
+        style={'height': '800px', 'width': '800px'},
+        children=
+        dcc.Graph(
+            id='map',
+            figure=f
+        )
+    ),
+    html.Div(id='output')
 ])
 
 if __name__ == '__main__':
