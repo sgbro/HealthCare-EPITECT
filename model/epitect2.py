@@ -89,7 +89,7 @@ X = ct.fit_transform(X).toarray()
 #X=X.reshape(-1,1)
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y_confirmed, test_size = 0.2, random_state = 0)
+X_train, X_test, y_train, y_test = train_test_split(X, y_recovered, test_size = 0.2, random_state = 0)
 
 '''
 from sklearn.ensemble import RandomForestRegressor
@@ -169,11 +169,11 @@ classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'linear'))
 classifier.compile(optimizer = 'adam', loss = 'mean_absolute_error', metrics = ['mean_absolute_error'])
 
 # Fitting the ANN to the Training set
-classifier.fit(X_train, y_train, batch_size = 5, nb_epoch = 170)
+classifier.fit(X_train, y_train, batch_size = 10, nb_epoch = 100)
 #classifier.fit(X_train, y_train)
 
 
-classifier.save("Confirmed values.h5")
+classifier.save("Recovered values.h5")
 
 
 
