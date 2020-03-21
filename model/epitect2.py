@@ -57,8 +57,9 @@ X.iloc[:,2]=labelencoder_X.fit_transform(X.iloc[:,2])
 '''
 #X=X.reshape(-1,1)
 
-#from sklearn.model_selection import train_test_split
-#X_train, X_test, y_train, y_test = train_test_split(X, y_confirmed, test_size = 0.2, random_state = 0)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y_confirmed, test_size = 0.2, random_state = 0)
+
 '''
 from sklearn.ensemble import RandomForestRegressor
 regressor_confirmed=RandomForestRegressor(n_estimators=100,random_state=0)
@@ -83,15 +84,37 @@ result['predicted D']=y_pred_deaths
 
 result.to_csv('results.csv')
 '''
+
 from sklearn.ensemble import RandomForestRegressor
-regressor=RandomForestRegressor(n_estimators=100,random_state=0)
-regressor.fit(X,y_confirmed)
+regressor=RandomForestRegressor(n_estimators=200,random_state=0)
+regressor.fit(X_train,y_train)
+
+
+'''
+from sklearn.linear_model import LinearRegression
+
+
+
+from sklearn.preprocessing import PolynomialFeatures
+poly_reg=PolynomialFeatures(degree=4)
+X_poly=poly_reg.fit_transform(X_train)
+poly_reg.fit(X_poly,y_train)
+
+lin_reg=LinearRegression()
+lin_reg.fit(X_poly,y_train)
+'''
+
+'''
+from sklearn.svm import SVR
+regressor=SVR(kernel='rbf')
+regressor.fit(X_train,y_train)
+'''
 
 test_data=pd.read_csv('test_cases.csv')
 test_data=test_data.drop(['Date'],axis=1)
 test_data=test_data.drop(['Confirmed'],axis=1)
 
+#y_pred=lin_reg.predict(poly_reg.fit_transform(X_test))
 y_pred=regressor.predict(test_data)
-
 
 
