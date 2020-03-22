@@ -50,3 +50,6 @@ NOTE: **activate** your virtual environment before this so that it gets installe
 **3.** The unstructured data or raw data especially in the field of healthcare  makes it difficult to use more and more structured data.
 
 **4.** Various other factors such as population density of an area, Economic profile (GDP, GDP PPP), Two weeks' data, Reported cases, Vector agent occurences, proximity with other populated regions greatly affects the prediction results which can be integrated with the model in future but not now due to lack of datasets.
+
+
+![Test Image 1](p1.png)
