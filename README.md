@@ -52,4 +52,4 @@ NOTE: **activate** your virtual environment before this so that it gets installe
 **4.** Various other factors such as population density of an area, Economic profile (GDP, GDP PPP), Two weeks' data, Reported cases, Vector agent occurences, proximity with other populated regions greatly affects the prediction results which can be integrated with the model in future but not now due to lack of datasets.
 
 
-![Test Image 1](https://github.com/sgbro/HealthCare-EPITECT/tree/master/images/p1.png)
+![Test Image 1](https://github.com/sgbro/HealthCare-EPITECT/blob/master/images/p1.png)
