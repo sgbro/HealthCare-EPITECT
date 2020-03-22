@@ -53,3 +53,9 @@ NOTE: **activate** your virtual environment before this so that it gets installe
 
 
 ![Test Image 1](https://github.com/sgbro/HealthCare-EPITECT/blob/master/images/p1.png)
+
+![Test Image 1](https://github.com/sgbro/HealthCare-EPITECT/blob/master/images/p2.png)
+
+![Test Image 1](https://github.com/sgbro/HealthCare-EPITECT/blob/master/images/p3.png)
+
+![Test Image 1](https://github.com/sgbro/HealthCare-EPITECT/blob/master/images/p4.png)
