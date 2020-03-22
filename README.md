@@ -1,4 +1,4 @@
-#EPITECT - DISEASE SURVEILLANCE AND PREDICTION SYSTEM
+EPITECT - DISEASE SURVEILLANCE AND PREDICTION SYSTEM
 
 EPITECT is an initiative taken by us to forecast/predict the number of patients infected with Novel Corona Virus COVID-19.
 Our Model is a Machine learning based model that predicts the number of patients infected with corona, the recovery rate and the number of deaths that will be caused due to corona in the upcoming days in the future.
