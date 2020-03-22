@@ -12,6 +12,7 @@ With the help of Drop-down menu you select the locations whose prediction you wa
 
 Basically the UI displays two types of result :-
 •	The World-wide prediction of the disease, with the help of global map.
+
 •	Second is the region-specific prediction based on the region selected from the drop-down
 It shows various comparisons among different predicted rates in form of Line-Charts as well as Bar-Charts.
 These comparisons can be studied for further analysis by the concerned authorities.
@@ -19,9 +20,14 @@ These comparisons can be studied for further analysis by the concerned authoriti
 ##### **Setup development environment:**
 We assume you have python 3.0+ installed.
 •	Create a directory where you can keep your cloned repository then cd to that directory.
+
 •	git clone https://github.com/sgbro/HealthCare-EPITECT.git
+
 •	cd to the cloned repository
+
 •	install the required libraries.
+
 NOTE: **activate** your virtual environment before this so that it gets installed in that environment.
+
 •	run the **app.py** file so that the project will run in your browser locally.
 
