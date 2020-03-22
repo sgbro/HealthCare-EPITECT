@@ -42,6 +42,9 @@ NOTE: **activate** your virtual environment before this so that it gets installe
 •	run the **app.py** file so that the project will run in your browser locally.
 
 ##### NOTE : 
+
 **1.** The accuracy of model is limited by some attributes such as life styles, population dynamics etc. which can be implemented in future with proper availability of the datasets.
+
 **2.** Certain additional data has to be requested to govt. as well as healthcare institutions that is not currrently available in the public domain.
+
 **3.** The unstructured data or raw data especially in the field of healthcare  makes it difficult to use more and more structured data.
