@@ -20,8 +20,16 @@ It shows various comparisons among different predicted rates in form of Line-Cha
 These comparisons can be studied for further analysis by the concerned authorities.
 
 #### **Setup development environment:**
+
 We assume you have python 3.0+ installed.
-•	Create a directory where you can keep your cloned repository then cd to that directory.
+
+**Create a python virtual environment:**
+
+•	pip install virtualenv
+
+Then create a directory where you can keep all your virtual environments.(like venvs) then cd to that directory
+
+•	virtualenv epitect : this will be your virtual enviroment for all related packages.
 
 •	git clone https://github.com/sgbro/HealthCare-EPITECT.git
 
