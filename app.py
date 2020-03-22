@@ -12,89 +12,109 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-df = pd.read_csv('C:/Users/sourabh gupta/Desktop/sg.csv')
-df2 = pd.read_csv('Output/output.csv')
-
+df = pd.read_csv('Output/output_modified.csv')
+df2 = pd.read_csv('Output/output_new.csv')
+df3= pd.read_csv('Output/output.csv')
 colors = {
     'background': '#111111',
     'text': '#7FDBFF'
 }
 
 # LINE CHART TEMPLATE CODE
-
 fig = go.Figure()
-fig.add_trace(go.Scatter(y=df['predicted C'], x=df['sl'], name='predicted cases',
-                         line=dict(color='firebrick', width=2,
-                                   dash='dash')
-                         ))
-fig.add_trace(go.Scatter(x=df['sl'], y=df['confirmed cases'], name='confirmed cases',
-                         line=dict(color='blue', width=2)
-                         ))
+fig.add_trace(go.Scatter(y=df2['confirmed cases'], x=df2['DateP'], name='predicted cases',
+                         line=dict(color='firebrick', width=2,dash='dashdot') # dash options include 'dash', 'dot', and 'dashdot'
+))
+fig.add_trace(go.Scatter(x=df2['DateP'], y=df2['recoved cases'], name='recovered cases',
+                         line=dict(color='blue', width=2,dash='dashdot') # dash options include 'dash', 'dot', and 'dashdot'
+))
 
+figg = go.Figure()
+figg.add_trace(go.Scatter(y=df2['death cases'], x=df2['DateP'], name='death cases',
+                         line=dict(color='firebrick', width=2,dash='dashdot') # dash options include 'dash', 'dot', and 'dashdot'
+))
+figg.add_trace(go.Scatter(x=df2['DateP'], y=df2['recoved cases'], name='recovered cases',
+                         line=dict(color='blue', width=2,dash='dashdot') # dash options include 'dash', 'dot', and 'dashdot'
+))
 # END OF LINE CHART
 
-# BAR GRAPH TEMPLATE CODE
+# BAR GRAPH TEMPLATE CODE###################################
 
 fig2 = go.Figure(data=[
-    go.Bar(name='Predicted', x=df['sl'], y=df['predicted C'], hovertemplate="Predicted : %{y}",
-           marker={'color': 'rgb(0,11,111)'}),
-    go.Bar(name='Confirmed', x=df['sl'], y=df['confirmed cases'], hovertemplate="Confirmed : %{y}",
-           marker={'color': 'rgb(100,100,100)'})
+    go.Bar(name='Confirmed', y=df2['confirmed cases'], x=df2['DateP'], hovertemplate="Confirmed : %{y}",
+           marker={'color': 'rgb(49,0,0)'}),
+    go.Bar(name='Death ', x=df2['DateP'], y=df2['death cases'], hovertemplate="Death : %{y}",
+           marker={'color': 'rgb(255,0,0)'})
 ])
 
-fig2.update_layout(title="Prediction vs Confirmation", barmode='group')
+fig2.update_layout(title="Confirmed vs Death rates of REGION with particular date", barmode='group',bargap=0)
 
-# END OF BAR CHART CODE
+fig3 = go.Figure(data=[
+    go.Bar(name='Confirmed', y=df2['confirmed cases'], x=df2['DateP'], hovertemplate="Confirmed : %{y}",
+           marker={'color': 'rgb(49,0,0)'}),
+    go.Bar(name='Recovery', x=df2['DateP'], y=df2['recoved cases'], hovertemplate="Recovered : %{y}",
+           marker={'color': 'rgb(156,0,0)'}),
+])
 
-# PIE CHART TEMPLATE
+fig3.update_layout(title="Confirmed vs Recovery rates of REGION with particular date", barmode='group',bargap=0)
 
-pc = np.array(df['predicted C'])
-cc = np.array(df['confirmed cases'])
-sum1 = np.sum(pc)
-sum2 = np.sum(cc)
-sum = sum1 + sum2
-# Pie chart, where the slices will be ordered and plotted counter-clockwise:
-labels = 'Predicted Case', 'Confirmed Case'
-sizes = [sum1 * 100 / sum, sum2 * 100 / sum]
-explode = (0, 0.1)  # only "explode" the 2nd slice (i.e. 'Hogs')
+fig4 = go.Figure(data=[
+    go.Bar(name='Death ', x=df2['DateP'], y=df2['death cases'], hovertemplate="Death : %{y}",
+           marker={'color': 'rgb(255,0,0)'}),
+    go.Bar(name='Recovery', x=df2['DateP'], y=df2['recoved cases'], hovertemplate="Recovered : %{y}",
+           marker={'color': 'rgb(100,0,0)'})
+])
 
-fig1, ax1 = plt.subplots()
-ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-        shadow=True, startangle=90)
-ax1.axis('equal')
-fg = go.Figure(plt.show())
-# END OF PIE CHART TEMP
+fig4.update_layout(title="Recovery vs Death rates of REGION with particular date", barmode='group',bargap=0)
+# END OF BAR CHART CODE##############################
 
-# MAP
-cities = pd.read_csv('C:/Users/sourabh gupta/Downloads/Compressed/zomato/zomato.csv', engine='python')
-f = px.scatter_mapbox(cities, lat="Latitude", lon="Longitude", hover_name="City"
-                      , hover_data=['Address', 'Locality'])
-f.update_layout(mapbox_style="open-street-map")
+
+# MAP#####################################################
+
+token='pk.eyJ1Ijoic2dicm8iLCJhIjoiY2s4MjZ2bXR6MGl3YzNmcHFjNGd5cXN6bSJ9.LVIXScq3Dzv6odXDKjcSnA'
+cities = pd.read_csv('Output/output_modified.csv', engine='python')
+f = px.scatter_mapbox(cities, lat="Lat", lon="Long"
+                      , hover_data=['confirmed cases','recoved cases','death cases', 'DateP'],zoom=1)
+f.update_layout(mapbox_style="dark",mapbox_accesstoken=token)
 f.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-f.show()
-# END MAP
 
+# END MAP#################################################
+app.title='EPITECT'
 app.layout = html.Div(style={'text-align': 'center', 'font-weight': 'bolder'}, children=[
-    html.H1(children='EPITECT DISEASE SURVEILLANCE SYSTEM'),
+    html.H1(children='EPITECT DISEASE SURVEILLANCE AND PREDICTION SYSTEM'),
 
     html.Div(style={'height': '20px', 'width': '800px',
                     'color': '#7FDBFF',
-                    },
-             children='''
-            Dash: A web application framework for Python.
-            '''),
+                    }),
     html.Div(
-        dcc.Dropdown(id='dropdown',
+        dcc.Dropdown(id='dropdown',style={'width':'800px', 'align':'center'},
                      options=[
-                         {'label': i, 'value': i} for i in df2.Location.unique()],
-                     searchable=False
+                         {'label': i, 'value': i} for i in df3.Location.unique()],
+                     searchable=False,
+                     placeholder='Select the region'
                      )),
+    html.Div(
+        style={'height': '800px', 'width': '800px'},
+        children=[html.H3(html.B("Predicted Areas")),
+        dcc.Graph(
+            id='map',
+            figure=f
+        )]
+    ),
     html.Div(
         style={'height': '800px', 'width': '800px'},
         children=
         dcc.Graph(
             id='line-graph',
-            figure=fig
+           figure=fig
+        )
+    ),
+    html.Div([html.Div(
+        style={'height': '800px', 'width': '800px'},
+        children=
+        dcc.Graph(
+            id='line-graph2',
+           figure=figg
         )
     ),
     html.Div(
@@ -103,25 +123,25 @@ app.layout = html.Div(style={'text-align': 'center', 'font-weight': 'bolder'}, c
         dcc.Graph(
             id='bar-graph',
             figure=fig2
+            )
+        )
+    ]),
+    html.Div(
+        style={'height': '800px', 'width': '800px'},
+        children=
+        dcc.Graph(
+            id='bar-graph2',
+            figure=fig3
         )
     ),
     html.Div(
         style={'height': '800px', 'width': '800px'},
         children=
         dcc.Graph(
-            id='pie-graph',
-            figure=fg
+            id='bar-graph3',
+            figure=fig4
         )
-    ),
-    html.Div(
-        style={'height': '800px', 'width': '800px'},
-        children=
-        dcc.Graph(
-            id='map',
-            figure=f
-        )
-    ),
-    html.Div(id='output')
+    )
 ])
 
 if __name__ == '__main__':
